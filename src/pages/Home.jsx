@@ -1,13 +1,29 @@
-import React from "react";
-import { Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 
+const Stack = createStackNavigator();
 const Home = () => {
+  const screenOptions = {
+    headerShown: false,
+    ...TransitionPresets.SlideFromRightIOS,
+  };
   return (
-    <View className="flex-1 justify-center items-center">
-      <Text className="text-indigo-500 text-3xl">
-        Hello Tailwind ... Netflix is gonna love you!
-      </Text>
-    </View>
+    <NavigationContainer>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        className="flex-1"
+        keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
+      >
+        <Stack.Navigator
+          initialRouteName="Splash"
+          screenOptions={screenOptions}
+        ></Stack.Navigator>
+      </KeyboardAvoidingView>
+    </NavigationContainer>
   );
 };
 
